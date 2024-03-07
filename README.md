@@ -1,3 +1,2 @@
 # .NETApplication-CICD-pipeline
-.NET WeatherForecast application for .NET articles series
-
+.NET WeatherForecast application
