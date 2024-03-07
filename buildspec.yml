@@ -1,0 +1,25 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      dotnet: 8.0
+  build:
+    commands:
+      - dotnet build src/WeatherForecast.csproj
+      - dotnet test test/WeatherForecastTest.csproj --logger trx --results-directory ./testresults
+  post_build:
+    commands:
+      - dotnet publish -r linux-x64 src/WeatherForecast.csproj
+reports:
+  #dotnetcicdtest: Specifies a custom name for the report.
+  dotnetcicdtest:
+  # Specifies the files to include in the report. Here, it includes all files (**/*) in the testresults directory.
+    files:
+      - '**/*'
+      # Specifies the base directory for the files.
+    base-directory: './testresults'
+#  Specifies the artifacts to be created and uploaded to an S3 bucket after the build    
+artifacts:  
+  files:
+    - src/bin/Release/net8.0/linux-x64/publish/**/*
+  discard-paths: yes
